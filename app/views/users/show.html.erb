@@ -1,0 +1,25 @@
+<% title "User" %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Inbox Size:</strong>
+  <%= @user.inbox_size %>
+</p>
+
+<%= link_to "Get gmails", new_gmail_session_user_path(@user) %> 
+
+
+<br /><br /><br /><br /><br /><br /><br />
+<p>
+  <%= link_to "Edit", edit_user_path(@user) %> |
+  <%= link_to "Destroy", @user, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", users_path %>
+</p>
