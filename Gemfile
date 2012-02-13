@@ -9,7 +9,7 @@ gem 'sqlite3'
 
 # oauth
 gem 'oauth', :git => 'git://github.com/chrisduesing/oauth-ruby.git'
-gem 'gmail_xoauth', :git => 'git://github.com/nfo/gmail_xoauth.git'
+gem 'ruby_gmail_xoauth', :git => 'git://github.com/chrisduesing/ruby_gmail_xoauth.git'
 
 # parsing gmail xml
 gem 'nokogiri'

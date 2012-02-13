@@ -76,17 +76,13 @@ class UsersController < ApplicationController
 
   def gmail
     @user = User.find(params[:id])
-    imap = Net::IMAP.new('imap.gmail.com', 993, usessl = true, certs = nil, verify = false)
-    imap.authenticate('XOAUTH', @user.email,
-                      :consumer_key => "hobstr.com",
-                      :consumer_secret => "Ex46_y1b_oELupr5pSge9SNq",
-                      :token => @user.oauth_token,
-                      :token_secret => @user.oauth_secret
-                      )
-    @user.inbox_size = imap.status('INBOX', ['MESSAGES'])['MESSAGES']
+    gmail = GmailXoauth.new(@user.email, @user.oauth_token, @user.oauth_secret, "hobstr.com", "Ex46_y1b_oELupr5pSge9SNq")
+    @user.inbox_size = gmail.inbox.count
     @user.save
-    imap.examine('INBOX')
-    flash[:notice] = imap.fetch(1..10, "BODY[HEADER.FIELDS (SUBJECT)]")
+    gmail.peek
+    gmail.inbox.emails(:read, :after => Date.parse("2012-02-11")).each do |email|
+      flash[:notice] = email.body
+    end
     render :show
   end
 
